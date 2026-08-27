@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/ethereum-optimism/optimism/op-service/predeploys"
+	"github.com/ethereum-optimism/optimism/op-core/predeploys"
 	"github.com/ethereum-optimism/supersim/artifact"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum-optimism/supersim/config"
@@ -23,7 +23,6 @@ var interopPredeploys = []common.Address{
 	predeploys.L1BlockAddr,
 	predeploys.SuperchainETHBridgeAddr,
 	predeploys.ETHLiquidityAddr,
-	predeploys.SuperchainTokenBridgeAddr,
 }
 
 var (

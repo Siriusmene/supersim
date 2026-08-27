@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.25;
 
-import {SuperchainERC20} from "@contracts-bedrock/L2/SuperchainERC20.sol";
+// contracts-bedrock deleted SuperchainERC20 in ethereum-optimism/optimism#19999. interop-lib
+// still carries it and is already a submodule here.
+import {SuperchainERC20} from "@interop-lib/SuperchainERC20.sol";
 import {ISemver} from "@contracts-bedrock-interfaces/universal/ISemver.sol";
 
 /// @notice Thrown when attempting to mint or burn tokens and the account is the zero address.

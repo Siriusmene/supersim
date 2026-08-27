@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/ethereum-optimism/optimism/op-service/predeploys"
+	"github.com/ethereum-optimism/optimism/op-core/predeploys"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum-optimism/supersim/config"
 	"github.com/ethereum-optimism/supersim/orchestrator"
@@ -120,7 +120,6 @@ func (s *Supersim) ConfigAsString() string {
 		fmt.Fprintf(&b, " - L2ToL2CrossDomainMessenger: %s\n", predeploys.L2toL2CrossDomainMessenger)
 		fmt.Fprintf(&b, " - CrossL2Inbox:               %s\n", predeploys.CrossL2Inbox)
 		fmt.Fprintf(&b, " - Promise:                    %s\n", bindings.PromiseAddr)
-		fmt.Fprintf(&b, " - SuperchainTokenBridge:      %s\n", predeploys.SuperchainTokenBridge)
 		fmt.Fprintf(&b, " - SuperchainETHBridge:        %s\n", predeploys.SuperchainETHBridge)
 		fmt.Fprintf(&b, " - GasTank:                    %s\n", "0x420bEEF000000000000000000000000000000002")
 	}

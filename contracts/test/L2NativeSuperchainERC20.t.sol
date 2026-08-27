@@ -3,17 +3,17 @@ pragma solidity 0.8.25;
 
 import {Test} from "forge-std/Test.sol";
 
-import {Predeploys} from "@contracts-bedrock/libraries/Predeploys.sol";
+import {PredeployAddresses} from "@interop-lib/libraries/PredeployAddresses.sol";
 
 import {ERC20} from "@solady-v0.0.245/tokens/ERC20.sol";
 
 import {L2NativeSuperchainERC20, ZeroAddress} from "../src/L2NativeSuperchainERC20.sol";
-import {IERC7802} from "@contracts-bedrock-interfaces/L2/IERC7802.sol";
-import {ISuperchainERC20} from "@contracts-bedrock-interfaces/L2/ISuperchainERC20.sol";
+import {IERC7802} from "@interop-lib/interfaces/IERC7802.sol";
+import {ISuperchainERC20} from "@interop-lib/interfaces/ISuperchainERC20.sol";
 
 contract L2NativeSuperchainERC20Test is Test {
     address internal constant ZERO_ADDRESS = address(0);
-    address internal constant SUPERCHAIN_TOKEN_BRIDGE = Predeploys.SUPERCHAIN_TOKEN_BRIDGE;
+    address internal constant SUPERCHAIN_TOKEN_BRIDGE = PredeployAddresses.SUPERCHAIN_TOKEN_BRIDGE;
 
     L2NativeSuperchainERC20 public superchainERC20;
 

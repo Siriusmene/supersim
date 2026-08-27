@@ -15,7 +15,7 @@ import (
 	"sync/atomic"
 
 	ophttp "github.com/ethereum-optimism/optimism/op-service/httputil"
-	"github.com/ethereum-optimism/optimism/op-service/predeploys"
+	"github.com/ethereum-optimism/optimism/op-core/predeploys"
 	"github.com/ethereum-optimism/optimism/op-service/tasks"
 
 	"github.com/ethereum-optimism/supersim/bindings"
@@ -251,39 +251,6 @@ func (opSim *OpSimulator) startBackgroundTasks() {
 			}
 		}
 		return nil
-	})
-
-	// Log SuperchainTokenBridge events
-	opSim.bgTasks.Go(func() error {
-		superchainTokenBridge, err := bindings.NewSuperchainTokenBridge(predeploys.SuperchainTokenBridgeAddr, opSim.Chain.EthClient())
-		if err != nil {
-			return fmt.Errorf("failed to create SuperchainTokenBridge contract: %w", err)
-		}
-
-		sendEventChan := make(chan *bindings.SuperchainTokenBridgeSendERC20)
-		sendSub, err := superchainTokenBridge.WatchSendERC20(&bind.WatchOpts{Context: opSim.bgTasksCtx}, sendEventChan, nil, nil, nil)
-		if err != nil {
-			return fmt.Errorf("failed to subscribe to SuperchainTokenBridge#SendERC20: %w", err)
-		}
-
-		relayEventChan := make(chan *bindings.SuperchainTokenBridgeRelayERC20)
-		relaySub, err := superchainTokenBridge.WatchRelayERC20(&bind.WatchOpts{Context: opSim.bgTasksCtx}, relayEventChan, nil, nil, nil)
-		if err != nil {
-			return fmt.Errorf("failed to subscribe to SuperchainTokenBridge#RelayERC20: %w", err)
-		}
-
-		for {
-			select {
-			case event := <-sendEventChan:
-				opSim.log.Info("SuperchainTokenBridge#SendERC20", "token", event.Token, "from", event.From, "to", event.To, "amount", event.Amount, "destination", event.Destination)
-			case event := <-relayEventChan:
-				opSim.log.Info("SuperchainTokenBridge#RelayERC20", "token", event.Token, "from", event.From, "to", event.To, "amount", event.Amount, "source", event.Source)
-			case <-opSim.bgTasksCtx.Done():
-				sendSub.Unsubscribe()
-				relaySub.Unsubscribe()
-				return nil
-			}
-		}
 	})
 
 	// Log SuperchainETHBridge events

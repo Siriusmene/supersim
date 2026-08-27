@@ -8,7 +8,7 @@ import (
 	"github.com/ethereum/go-ethereum/log"
 
 	"github.com/asaskevich/EventBus"
-	"github.com/ethereum-optimism/optimism/op-service/predeploys"
+	"github.com/ethereum-optimism/optimism/op-core/predeploys"
 	"github.com/ethereum-optimism/optimism/op-service/tasks"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum/go-ethereum"
