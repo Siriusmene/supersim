@@ -26,10 +26,10 @@ var interopPredeploys = []common.Address{
 }
 
 var (
-	poolManagerAddr = common.HexToAddress("0x503ce871243002F3F0faD0CCfCbfC1917A1B62Bf")
-	posmAddr        = common.HexToAddress("0x2E96bbDc8c231D297c758ee125704D1411520C1f")
-	stateViewAddr   = common.HexToAddress("0xbd560A8C6f5c8a74CBCB76c5cAf853027D8EAaA6")
-	routerAddr      = common.HexToAddress("0x22f674A2e2a9Ea63d193763A2da3B4d48CC1C363")
+	poolManagerAddr = common.HexToAddress("0xB05DAA803B0E88B54F286cEB65d0606D68088ef1")
+	posmAddr        = common.HexToAddress("0xD5a5DB4aA229E115E4307AFA74bE7160fB7e5b22")
+	stateViewAddr   = common.HexToAddress("0xF560A530DDC2aBb2c2eD86ce8D635c159f711BA2")
+	routerAddr      = common.HexToAddress("0x7Bcc49cc98c4A8C206654AE352a8fc733219E78D")
 )
 
 var uniswapV4Addrs = []common.Address{
