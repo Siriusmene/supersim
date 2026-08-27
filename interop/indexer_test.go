@@ -5,8 +5,8 @@ import (
 	"math/big"
 	"testing"
 
-	oplog "github.com/ethereum-optimism/optimism/op-service/log"
 	"github.com/ethereum-optimism/optimism/op-core/predeploys"
+	oplog "github.com/ethereum-optimism/optimism/op-service/log"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum-optimism/supersim/testutils"
 	"github.com/ethereum/go-ethereum/common"

@@ -83,10 +83,10 @@ func SupersimMain(ctx *cli.Context, closeApp context.CancelCauseFunc) (cliapp.Li
 	log := oplog.NewLogger(oplog.AppOut(ctx), oplog.ReadCLIConfig(ctx))
 	ok, minAnvilErr := isMinAnvilInstalled()
 	if !ok {
-		return nil, fmt.Errorf("anvil version timestamp of %s or higher is required, please use foundryup to update to the latest version.", minAnvilTimestamp)
+		return nil, fmt.Errorf("anvil version timestamp of %s or higher is required, please use foundryup to update to the latest version", minAnvilTimestamp)
 	}
 	if minAnvilErr != nil {
-		return nil, fmt.Errorf("error determining installed anvil version: %w.", minAnvilErr)
+		return nil, fmt.Errorf("error determining installed anvil version: %w", minAnvilErr)
 	}
 
 	cfg, err := config.ReadCLIConfig(ctx)
@@ -139,12 +139,12 @@ func isMinAnvilInstalled() (bool, error) {
 func isTimestampGreaterOrEqual(timestamp, minTimestamp string) (bool, error) {
 	parsedTimestamp, err := time.Parse(time.RFC3339Nano, timestamp)
 	if err != nil {
-		return false, fmt.Errorf("Error parsing timestamp: %w", err)
+		return false, fmt.Errorf("error parsing timestamp: %w", err)
 	}
 
 	parsedMinTimestamp, err := time.Parse(time.RFC3339Nano, minTimestamp)
 	if err != nil {
-		return false, fmt.Errorf("Error parsing minimum required timestamp: %w", err)
+		return false, fmt.Errorf("error parsing minimum required timestamp: %w", err)
 	}
 
 	return !parsedTimestamp.Before(parsedMinTimestamp), nil

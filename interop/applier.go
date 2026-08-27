@@ -74,7 +74,7 @@ func Configure(ctx context.Context, chain config.Chain) error {
 		// Manually set the code the Promise contract
 		promiseAlloc, ok := l2Genesis.Alloc[strings.ToLower(bindings.PromiseAddr.Hex()[2:])]
 		if !ok {
-			return fmt.Errorf("promise alloc not found %s:", bindings.PromiseAddr)
+			return fmt.Errorf("promise alloc not found %s", bindings.PromiseAddr)
 		}
 		if err := applyAllocToAddress(ctx, chain, &promiseAlloc, bindings.PromiseAddr); err != nil {
 			return fmt.Errorf("failed to apply alloc for %s: %w", bindings.PromiseAddr, err)
@@ -84,7 +84,7 @@ func Configure(ctx context.Context, chain config.Chain) error {
 		for _, addr := range uniswapV4Addrs {
 			uniswapV4Alloc, ok := l2Genesis.Alloc[strings.ToLower(addr.Hex()[2:])]
 			if !ok {
-				return fmt.Errorf("uniswapV4 alloc not found %s:", addr)
+				return fmt.Errorf("uniswapV4 alloc not found %s", addr)
 			}
 			if err := applyAllocToAddress(ctx, chain, &uniswapV4Alloc, addr); err != nil {
 				return fmt.Errorf("failed to apply alloc for %s: %w", addr, err)
@@ -124,7 +124,7 @@ func predeployToCodeNamespace(addr common.Address) common.Address {
 func applyAllocForPredeploy(ctx context.Context, chain config.Chain, predeploy predeploy, genesisJSON *genesis.GenesisJson) error {
 	implAlloc, ok := genesisJSON.Alloc[strings.ToLower(predeploy.impl.Hex()[2:])]
 	if !ok {
-		return fmt.Errorf("alloc not found %s:", predeploy.impl)
+		return fmt.Errorf("alloc not found %s", predeploy.impl)
 	}
 	if err := applyAllocToAddress(ctx, chain, &implAlloc, predeploy.impl); err != nil {
 		return fmt.Errorf("failed to apply alloc for %s: %w", predeploy.impl, err)
@@ -132,7 +132,7 @@ func applyAllocForPredeploy(ctx context.Context, chain config.Chain, predeploy p
 
 	proxyAlloc, ok := genesisJSON.Alloc[strings.ToLower(predeploy.proxy.Hex()[2:])]
 	if !ok {
-		return fmt.Errorf("alloc not found %s:", predeploy.proxy)
+		return fmt.Errorf("alloc not found %s", predeploy.proxy)
 	}
 	if err := applyAllocToAddress(ctx, chain, &proxyAlloc, predeploy.proxy); err != nil {
 		return fmt.Errorf("failed to apply alloc for %s: %w", predeploy.proxy, err)

@@ -129,7 +129,7 @@ func UnMarshaledL2GenesisJSON() (*GenesisJson, error) {
 	var genesis *GenesisJson
 	err := json.Unmarshal(GeneratedGenesisDeployment.L2s[0].GenesisJSON, &genesis)
 	if err != nil {
-		return nil, fmt.Errorf("Failed to unmarshal allocs: %w", err)
+		return nil, fmt.Errorf("failed to unmarshal allocs: %w", err)
 	}
 
 	return genesis, nil

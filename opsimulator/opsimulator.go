@@ -14,8 +14,8 @@ import (
 	"sync"
 	"sync/atomic"
 
-	ophttp "github.com/ethereum-optimism/optimism/op-service/httputil"
 	"github.com/ethereum-optimism/optimism/op-core/predeploys"
+	ophttp "github.com/ethereum-optimism/optimism/op-service/httputil"
 	"github.com/ethereum-optimism/optimism/op-service/tasks"
 
 	"github.com/ethereum-optimism/supersim/bindings"

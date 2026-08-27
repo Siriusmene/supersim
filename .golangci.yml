@@ -1,0 +1,29 @@
+version: "2"
+
+linters:
+  default: standard
+  enable:
+    - asciicheck
+    - bodyclose
+    - errorlint
+    - misspell
+    - sqlclosecheck
+  exclusions:
+    # v1 applied these by default; v2 requires opting in. Without them errcheck
+    # re-reports every deferred Close(), which v1 never flagged.
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    # Carried over from the v1 flags `-e "errors.As" -e "errors.Is"`. v2 requires a
+    # second selector per rule, so these are scoped to the linter that emits them.
+    rules:
+      - text: errors.As
+        linters: [errorlint]
+      - text: errors.Is
+        linters: [errorlint]
+
+formatters:
+  enable:
+    - goimports

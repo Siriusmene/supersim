@@ -1,8 +1,8 @@
 package interop
 
 import (
-	"github.com/ethereum-optimism/optimism/op-service/eth"
 	"github.com/ethereum-optimism/optimism/op-core/predeploys"
+	"github.com/ethereum-optimism/optimism/op-service/eth"
 	supervisortypes "github.com/ethereum-optimism/optimism/op-supervisor/supervisor/types"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum/go-ethereum/core/types"
