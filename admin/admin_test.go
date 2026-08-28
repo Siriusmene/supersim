@@ -52,7 +52,9 @@ func TestGetL1AddressesRPC(t *testing.T) {
 	require.NoError(t, adminServer.Start(ctx))
 
 	var client *rpc.Client
-	require.NoError(t, wait.For(context.Background(), 500*time.Millisecond, func() (bool, error) {
+	waitCtx, waitCancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer waitCancel()
+	require.NoError(t, wait.For(waitCtx, 500*time.Millisecond, func() (bool, error) {
 		newClient, err := rpc.Dial(adminServer.Endpoint())
 		if err != nil {
 			return false, err

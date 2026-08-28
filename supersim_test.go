@@ -991,7 +991,9 @@ func TestAutoRelaySimpleStorageCallSucceeds(t *testing.T) {
 	require.NoError(t, err)
 	require.True(t, initiatingMessageTxReceipt.Status == 1, "initiating message transaction failed")
 
-	require.NoError(t, wait.For(context.Background(), 500*time.Millisecond, func() (bool, error) {
+	waitCtx, waitCancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer waitCancel()
+	require.NoError(t, wait.For(waitCtx, 500*time.Millisecond, func() (bool, error) {
 		newVal, err := simpleStorage.Get(&bind.CallOpts{}, key)
 		require.NoError(t, err)
 		if err != nil {
@@ -1030,7 +1032,9 @@ func TestAutoRelaySuperchainETHBridgeTransferSucceeds(t *testing.T) {
 	require.True(t, sendEthTxReceipt.Status == 1, "send eth transaction failed")
 	sourceTransactor.Value = nil
 
-	require.NoError(t, wait.For(context.Background(), 500*time.Millisecond, func() (bool, error) {
+	waitCtx, waitCancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer waitCancel()
+	require.NoError(t, wait.For(waitCtx, 500*time.Millisecond, func() (bool, error) {
 		destEndingBalance, err := testSuite.DestEthClient.BalanceAt(context.Background(), sourceTransactor.From, nil)
 		require.NoError(t, err)
 		diff := new(big.Int).Sub(destEndingBalance, destStartingBalance)
@@ -1066,7 +1070,9 @@ func TestForkAutoRelaySuperchainETHBridgeTransferSucceeds(t *testing.T) {
 	require.True(t, sendEthTxReceipt.Status == 1, "send eth transaction failed")
 	sourceTransactor.Value = nil
 
-	require.NoError(t, wait.For(context.Background(), 500*time.Millisecond, func() (bool, error) {
+	waitCtx, waitCancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer waitCancel()
+	require.NoError(t, wait.For(waitCtx, 500*time.Millisecond, func() (bool, error) {
 		destEndingBalance, err := testSuite.DestEthClient.BalanceAt(context.Background(), sourceTransactor.From, nil)
 		require.NoError(t, err)
 		diff := new(big.Int).Sub(destEndingBalance, destStartingBalance)
@@ -1219,7 +1225,9 @@ func TestAdminGetL2ToL2MessageByMsgHash(t *testing.T) {
 	require.True(t, initiatingMessageTxReceipt.Status == 1, "initiating message transaction failed")
 
 	var client *rpc.Client
-	require.NoError(t, wait.For(context.Background(), 500*time.Millisecond, func() (bool, error) {
+	waitCtx, waitCancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer waitCancel()
+	require.NoError(t, wait.For(waitCtx, 500*time.Millisecond, func() (bool, error) {
 		destEndingBalance, err := testSuite.DestEthClient.BalanceAt(context.Background(), sourceTransactor.From, nil)
 		require.NoError(t, err)
 		diff := new(big.Int).Sub(destEndingBalance, destStartingBalance)
