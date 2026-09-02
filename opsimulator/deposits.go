@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 
+	optypes "github.com/ethereum-optimism/optimism/op-core/types"
 	"github.com/ethereum-optimism/optimism/op-node/rollup/derive"
 
 	"github.com/ethereum/go-ethereum/common"
@@ -80,8 +81,23 @@ func logToDepositTx(log *types.Log) (*types.DepositTx, error) {
 		if err != nil {
 			return nil, err
 		}
-		return dep, nil
+		return toGethDepositTx(dep), nil
 	} else {
 		return nil, errors.New("log is not a deposit event")
+	}
+}
+
+// The monorepo moved DepositTx into op-core/types, but op-geth keeps its own
+// copy and only that one satisfies types.TxData, so it is still what we send.
+func toGethDepositTx(dep *optypes.DepositTx) *types.DepositTx {
+	return &types.DepositTx{
+		SourceHash:          dep.SourceHash,
+		From:                dep.From,
+		To:                  dep.To,
+		Mint:                dep.Mint,
+		Value:               dep.Value,
+		Gas:                 dep.Gas,
+		IsSystemTransaction: dep.IsSystemTransaction,
+		Data:                dep.Data,
 	}
 }

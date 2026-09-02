@@ -35,6 +35,10 @@ import (
 	"golang.org/x/net/websocket"
 )
 
+// The monorepo dropped its SchemaRegistry bindings, so carry the one method
+// this test packs rather than depending on op-e2e/bindings for it.
+const schemaRegistryABI = `[{"inputs":[{"internalType":"string","name":"schema","type":"string"},{"internalType":"contract ISchemaResolver","name":"resolver","type":"address"},{"internalType":"bool","name":"revocable","type":"bool"}],"name":"register","outputs":[{"internalType":"bytes32","name":"","type":"bytes32"}],"stateMutability":"nonpayable","type":"function"}]`
+
 const (
 	anvilClientTimeout                = 5 * time.Second
 	emptyCode                         = "0x"
@@ -495,7 +499,7 @@ func TestBatchJsonRpcRequestErrorHandling(t *testing.T) {
 	require.NoError(t, err)
 
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -556,7 +560,7 @@ func TestInteropInvariantCheckSucceeds(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -620,7 +624,7 @@ func TestInteropInvariantCheckSucceedsWs(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -676,7 +680,7 @@ func TestInteropInvariantCheckFailsBadLogIndex(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -738,7 +742,7 @@ func TestInteropInvariantCheckFailsBadLogIndexWs(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -792,7 +796,7 @@ func TestInteropInvariantCheckBadBlockNumber(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -846,7 +850,7 @@ func TestInteropInvariantCheckBadBlockTimestamp(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -902,7 +906,7 @@ func TestForkedInteropInvariantCheckSucceeds(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -1095,7 +1099,7 @@ func TestInteropInvariantSucceedsWithDelay(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -1158,7 +1162,7 @@ func TestInteropInvariantFailsWhenDelayTimeNotPassed(t *testing.T) {
 
 	// Create initiating message using L2ToL2CrossDomainMessenger
 	origin := predeploys.L2toL2CrossDomainMessengerAddr
-	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+	parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 	data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 	require.NoError(t, err)
 
@@ -1422,7 +1426,7 @@ func TestDependencySetValidation(t *testing.T) {
 			require.NoError(t, err)
 
 			// Use SchemaRegistry as target
-			parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(opbindings.SchemaRegistryABI))
+			parsedSchemaRegistryAbi, _ := abi.JSON(strings.NewReader(schemaRegistryABI))
 			data, err := parsedSchemaRegistryAbi.Pack("register", "uint256 value", common.HexToAddress("0x0000000000000000000000000000000000000000"), false)
 			require.NoError(t, err)
 			tx, err := l2ToL2CrossDomainMessenger.SendMessage(sourceTransactor, big.NewInt(int64(tc.destChainID)), predeploys.SchemaRegistryAddr, data)
