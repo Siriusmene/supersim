@@ -84,6 +84,10 @@ update-and-vendor-superchain-registry: update-superchain-registry vendor-superch
 generate-monorepo-bindings: install-abigen
     ./scripts/generate-bindings.sh -u $(just calculate-artifact-url) -n CrossL2Inbox,L2ToL2CrossDomainMessenger,L1Block,SuperchainETHBridge,SuperchainERC20 -o ./bindings
 
+# genesis/generated is still the v1.16.13 output. Regenerating against a newer
+# pin fails because interopgen's CheckL2GenesisAllocs, added in
+# ethereum-optimism/optimism#21345, rejects the periphery contracts we deploy
+# into genesis as stray accounts, and offers no opt-out.
 generate-genesis: build-superchain-bundle build-monorepo-contracts build-contracts
     go run ./genesis/cmd/main.go --monorepo-artifacts $(just monorepo-artifacts-url) --periphery-artifacts ./contracts/out --outdir ./genesis/generated
 
