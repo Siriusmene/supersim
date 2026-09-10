@@ -111,6 +111,10 @@ func GenerateWorld(ctx context.Context, logger log.Logger, monorepoArtifacts *fo
 			return nil, nil, fmt.Errorf("failed to apply genesis data to L2 %s: %w", l2ChainID, err)
 		}
 
+		if err := checkStackGenesis(l2Host, l2Cfg); err != nil {
+			return nil, nil, fmt.Errorf("L2 %s genesis allocs failed validation: %w", l2ChainID, err)
+		}
+
 		if err := deployPeripheryContracts(logger, l2Host, peripheryArtifacts, l2Cfg, genesisTimestamp); err != nil {
 			return nil, nil, fmt.Errorf("failed to deploy periphery contracts to L2 %s: %w", l2ChainID, err)
 		}
@@ -119,7 +123,7 @@ func GenerateWorld(ctx context.Context, logger log.Logger, monorepoArtifacts *fo
 			return nil, nil, fmt.Errorf("failed to deploy value transfer interop contracts to L2 %s: %w", l2ChainID, err)
 		}
 
-		l2Out, err := interopgen.CompleteL2(l2Host, l2Cfg, l1GenesisBlock, deployments.L2s[l2ChainID])
+		l2Out, err := completeL2(l2Host, l2Cfg, l1GenesisBlock, deployments.L2s[l2ChainID])
 		if err != nil {
 			return nil, nil, fmt.Errorf("failed to complete L2 %s: %w", l2ChainID, err)
 		}
