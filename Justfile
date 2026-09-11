@@ -54,18 +54,9 @@ install-monorepo-contracts version: (fetch-monorepo-contracts version)
 
 install-monorepo version: (install-monorepo-go version) (install-monorepo-contracts version)
 
-install-abigen:
-  go install github.com/ethereum/go-ethereum/cmd/abigen@$(jq -r .abigen < versions.json)
-
-calculate-artifact-url:
-    #!/usr/bin/env bash
-    cd contracts/lib/optimism/packages/contracts-bedrock && \
-    checksum=$(bash scripts/ops/calculate-checksum.sh) && \
-    echo "https://storage.googleapis.com/oplabs-contract-artifacts/artifacts-v1-$checksum.tar.gz"
-
-# The published artifact tarballs stopped being produced, so the URL above 404s
-# for any recent monorepo pin. See ethereum-optimism/optimism#22679. Build the
-# artifacts from the submodule and hand op-deployer a file:// locator instead.
+# The published artifact tarballs stopped being produced, so the checksum-keyed
+# bucket URL 404s for any recent monorepo pin. See ethereum-optimism/optimism#22679.
+# Build the artifacts from the submodule and hand op-deployer a file:// locator instead.
 build-monorepo-contracts:
     cd contracts/lib/optimism/packages/contracts-bedrock && just build-no-tests
 
@@ -81,10 +72,7 @@ update-superchain-registry:
 
 update-and-vendor-superchain-registry: update-superchain-registry vendor-superchain-registry
 
-generate-monorepo-bindings: install-abigen
-    ./scripts/generate-bindings.sh -u $(just calculate-artifact-url) -n CrossL2Inbox,L2ToL2CrossDomainMessenger,L1Block,SuperchainETHBridge,SuperchainERC20 -o ./bindings
-
 generate-genesis: build-superchain-bundle build-monorepo-contracts build-contracts
     go run ./genesis/cmd/main.go --monorepo-artifacts $(just monorepo-artifacts-url) --periphery-artifacts ./contracts/out --outdir ./genesis/generated
 
-generate-all version: (install-monorepo version) generate-genesis generate-monorepo-bindings
+generate-all version: (install-monorepo version) generate-genesis
