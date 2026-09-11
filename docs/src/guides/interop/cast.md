@@ -3,7 +3,7 @@
 
 This guide describes how to form a [message identifier](https://specs.optimism.io/interop/messaging.html#message-identifier) to relay a [L2ToL2CrossDomainMessenger](https://github.com/ethereum-optimism/optimism/blob/develop/packages/contracts-bedrock/src/L2/L2ToL2CrossDomainMessenger.sol) cross chain call.
 
-We'll perform the SuperchainERC20 interop transfer in [First steps](../../getting-started/first-steps.md#send-an-interoperable-superchainerc20-token-from-chain-901-to-902-l2-to-l2-message-passing) again, this time manually relaying the message without the autorelayer.
+We'll perform a SuperchainERC20 interop transfer, manually relaying the message without the autorelayer.
 
 > **This guide does not work on supersim releases after `0.1.0-alpha.59`.**
 >

@@ -73,11 +73,6 @@ func TestL1ToL2Deposit(t *testing.T) {
 	}))
 }
 
-// TestL2ToL2Transfer was removed alongside the README walkthrough it mirrored. It drove
-// SuperchainTokenBridge.sendERC20 at 0x4200000000000000000000000000000000000028, and that
-// contract was deleted from the OP Stack in ethereum-optimism/optimism#19999, so the predeploy
-// is no longer in genesis and the transfer can never land.
-
 func TestSuperchainETHTransfer(t *testing.T) {
 	_ = createTestSuite(t, func(cfg *config.CLIConfig) *config.CLIConfig {
 		cfg.L1Port = 8545

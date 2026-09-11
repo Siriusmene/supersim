@@ -51,16 +51,4 @@ Verify that the ETH balance of the sender has increased on the L2:
 cast balance 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 --rpc-url http://127.0.0.1:9545
 ```
 
-## SuperchainERC20 token transfers (L2 to L2)
-
-This walkthrough used the `SuperchainTokenBridge` predeploy at
-`0x4200000000000000000000000000000000000028`. That contract was deleted from the OP Stack in
-[ethereum-optimism/optimism#19999](https://github.com/ethereum-optimism/optimism/pull/19999)
-("contracts: delete unused interop contracts"), so supersim no longer deploys it and the example
-no longer works. `0.1.0-alpha.59` is the last supersim release that includes it.
-
-For L2 to L2 ETH transfers, see `SuperchainETHBridge` at
-`0x4200000000000000000000000000000000000024`. For general L2 to L2 message passing, use
-`L2ToL2CrossDomainMessenger` at `0x4200000000000000000000000000000000000023`.
-
 With the steps above, you've now completed an L1 to L2 ETH bridge locally using `supersim`. This approach simplifies multichain testing, allowing you to focus on development without the need for complex setups or relying on external testnets.

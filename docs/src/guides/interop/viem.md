@@ -3,7 +3,7 @@
 
 This guide describes how to use [`viem`](https://viem.sh/) to send and relay interop messages using the `L2ToL2CrossDomainMessenger`
 
-We'll perform the SuperchainERC20 interop transfer in [First steps](../../getting-started/first-steps.md#send-an-interoperable-superchainerc20-token-from-chain-901-to-902-l2-to-l2-message-passing) and [Manually relaying interop messages with `cast`](./manually-relaying-interop-messages-cast.md) again, this time using `viem` to relay the message without the autorelayer.
+We'll perform a SuperchainERC20 interop transfer, this time using `viem` to relay the message without the autorelayer. For the same walkthrough with `cast`, see [Relay with Cast](./cast.md).
 
 > **This guide does not work on supersim releases after `0.1.0-alpha.59`.**
 >
