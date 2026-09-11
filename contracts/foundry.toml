@@ -13,10 +13,14 @@ fs_permissions = []
 remappings = [
   "@contracts-bedrock/=lib/optimism/packages/contracts-bedrock/src/",
   "@contracts-bedrock-interfaces/=lib/optimism/packages/contracts-bedrock/interfaces/",
-  "@solady-v0.0.245/=lib/optimism/packages/contracts-bedrock/lib/solady-v0.0.245/src/",
+  # Resolve solady from interop-lib's vendored copy, not contracts-bedrock's. interop-lib now
+  # supplies SuperchainERC20, and both must see the same ERC20 or solc treats them as distinct types.
+  "@solady-v0.0.245/=lib/interop-lib/vendor/solady-v0.0.245/",
   "@solady/=lib/optimism/packages/contracts-bedrock/lib/solady/src/",
   "@openzeppelin/contracts/=lib/optimism/packages/contracts-bedrock/lib/openzeppelin-contracts/contracts",
   "@interop-lib/=lib/interop-lib/src/",
+  # interop-lib's SuperchainERC20 resolves its OZ imports against its own vendored copy.
+  "@openzeppelin-contracts/=lib/interop-lib/vendor/openzeppelin-contracts/",
   "@permit2/=lib/v4-periphery/lib/permit2/src",
   "@uniswap-v4-core/=lib/v4-periphery/lib/v4-core/src",
   "@uniswap-v4-periphery/=lib/v4-periphery/src",

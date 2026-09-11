@@ -5,18 +5,26 @@ build-book:
 
 build-contracts:
     forge --version
-    forge build --sizes --root ./contracts src lib/optimism/packages/contracts-bedrock/src/universal/Proxy.sol lib/optimism/packages/contracts-bedrock/src/L2/SuperchainTokenBridge.sol lib/optimism/packages/contracts-bedrock/src/L2/SuperchainETHBridge.sol lib/optimism/packages/contracts-bedrock/src/L2/ETHLiquidity.sol
+    forge build --sizes --root ./contracts src lib/optimism/packages/contracts-bedrock/src/universal/Proxy.sol lib/optimism/packages/contracts-bedrock/src/L2/SuperchainETHBridge.sol lib/optimism/packages/contracts-bedrock/src/L2/ETHLiquidity.sol
 
-build-go:
+# op-core/superchain //go:embeds superchain-configs.zip, which the monorepo
+# gitignores, so it is absent from the published module and nothing that reaches
+# that package compiles. See ethereum-optimism/optimism#22678. Build it from the
+# monorepo submodule instead, which is why go.mod replaces the module with it.
+build-superchain-bundle:
+    git -C contracts/lib/optimism submodule update --init --force --depth 1 -- superchain-registry
+    cd contracts/lib/optimism && bash op-core/superchain/sync-superchain.sh
+
+build-go: build-superchain-bundle
     go build ./...
 
-lint-go:
-    golangci-lint run -E goimports,sqlclosecheck,bodyclose,asciicheck,misspell,errorlint --timeout 5m -e "errors.As" -e "errors.Is" ./...
+lint-go: build-superchain-bundle
+    golangci-lint run --timeout 5m ./...
 
 test-contracts:
     forge test -vvv --root ./contracts
 
-test-go:
+test-go: build-superchain-bundle
     go test ./... -v
 
 start:
@@ -46,14 +54,14 @@ install-monorepo-contracts version: (fetch-monorepo-contracts version)
 
 install-monorepo version: (install-monorepo-go version) (install-monorepo-contracts version)
 
-install-abigen:
-  go install github.com/ethereum/go-ethereum/cmd/abigen@$(jq -r .abigen < versions.json)
+# The published artifact tarballs stopped being produced, so the checksum-keyed
+# bucket URL 404s for any recent monorepo pin. See ethereum-optimism/optimism#22679.
+# Build the artifacts from the submodule and hand op-deployer a file:// locator instead.
+build-monorepo-contracts:
+    cd contracts/lib/optimism/packages/contracts-bedrock && just build-no-tests
 
-calculate-artifact-url: 
-    #!/usr/bin/env bash
-    cd contracts/lib/optimism/packages/contracts-bedrock && \
-    checksum=$(bash scripts/ops/calculate-checksum.sh) && \
-    echo "https://storage.googleapis.com/oplabs-contract-artifacts/artifacts-v1-$checksum.tar.gz"
+monorepo-artifacts-url:
+    @echo "file://$(pwd)/contracts/lib/optimism/packages/contracts-bedrock"
 
 vendor-superchain-registry:
     #!/usr/bin/env bash
@@ -64,10 +72,7 @@ update-superchain-registry:
 
 update-and-vendor-superchain-registry: update-superchain-registry vendor-superchain-registry
 
-generate-monorepo-bindings: install-abigen
-    ./scripts/generate-bindings.sh -u $(just calculate-artifact-url) -n CrossL2Inbox,L2ToL2CrossDomainMessenger,L1Block,SuperchainETHBridge,SuperchainERC20,SuperchainTokenBridge -o ./bindings
+generate-genesis: build-superchain-bundle build-monorepo-contracts build-contracts
+    go run ./genesis/cmd/main.go --monorepo-artifacts $(just monorepo-artifacts-url) --periphery-artifacts ./contracts/out --outdir ./genesis/generated
 
-generate-genesis: build-contracts
-    go run ./genesis/cmd/main.go --monorepo-artifacts $(just calculate-artifact-url) --periphery-artifacts ./contracts/out --outdir ./genesis/generated
-
-generate-all version: (install-monorepo version) generate-genesis generate-monorepo-bindings
+generate-all version: (install-monorepo version) generate-genesis

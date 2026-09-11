@@ -5,8 +5,8 @@ import (
 	"math/big"
 	"testing"
 
+	"github.com/ethereum-optimism/optimism/op-core/predeploys"
 	oplog "github.com/ethereum-optimism/optimism/op-service/log"
-	"github.com/ethereum-optimism/optimism/op-service/predeploys"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum-optimism/supersim/testutils"
 	"github.com/ethereum/go-ethereum/common"
@@ -25,7 +25,7 @@ var header = types.Header{
 	Time:   timestamp,
 }
 
-var block = types.NewBlock(&header, nil, nil, types.TrieHasher((*trie.StackTrie)(nil)), types.DefaultBlockConfig)
+var block = types.NewBlock(&header, nil, nil, types.ListHasher((*trie.StackTrie)(nil)), types.DefaultBlockConfig)
 
 var sentMessage = &L2ToL2Message{
 	Destination: destinationChainID,

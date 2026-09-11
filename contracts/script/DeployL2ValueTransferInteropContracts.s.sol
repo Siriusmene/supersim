@@ -35,14 +35,6 @@ contract DeployL2ValueTransferInteropContracts is Script {
     function run() public broadcast {
         setETHLiquidity();
         setSuperchainETHBridge();
-        setSuperchainTokenBridge();
-    }
-
-    /// @notice This predeploy is following the safety invariant #1.
-    ///         This contract has no initializer.
-    function setSuperchainTokenBridge() internal {
-        _setPredeployProxy(Predeploys.SUPERCHAIN_TOKEN_BRIDGE);
-        _setImplementationCode(Predeploys.SUPERCHAIN_TOKEN_BRIDGE);
     }
 
     /// @notice This predeploy is following the safety invariant #1.

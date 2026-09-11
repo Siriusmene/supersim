@@ -6,7 +6,7 @@ import (
 	"math/big"
 	"strings"
 
-	"github.com/ethereum-optimism/optimism/op-service/predeploys"
+	"github.com/ethereum-optimism/optimism/op-core/predeploys"
 	"github.com/ethereum-optimism/supersim/artifact"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum-optimism/supersim/config"
@@ -23,14 +23,13 @@ var interopPredeploys = []common.Address{
 	predeploys.L1BlockAddr,
 	predeploys.SuperchainETHBridgeAddr,
 	predeploys.ETHLiquidityAddr,
-	predeploys.SuperchainTokenBridgeAddr,
 }
 
 var (
-	poolManagerAddr = common.HexToAddress("0x503ce871243002F3F0faD0CCfCbfC1917A1B62Bf")
-	posmAddr        = common.HexToAddress("0x2E96bbDc8c231D297c758ee125704D1411520C1f")
-	stateViewAddr   = common.HexToAddress("0xbd560A8C6f5c8a74CBCB76c5cAf853027D8EAaA6")
-	routerAddr      = common.HexToAddress("0x22f674A2e2a9Ea63d193763A2da3B4d48CC1C363")
+	poolManagerAddr = common.HexToAddress("0xB05DAA803B0E88B54F286cEB65d0606D68088ef1")
+	posmAddr        = common.HexToAddress("0xD5a5DB4aA229E115E4307AFA74bE7160fB7e5b22")
+	stateViewAddr   = common.HexToAddress("0xF560A530DDC2aBb2c2eD86ce8D635c159f711BA2")
+	routerAddr      = common.HexToAddress("0x7Bcc49cc98c4A8C206654AE352a8fc733219E78D")
 )
 
 var uniswapV4Addrs = []common.Address{
@@ -75,7 +74,7 @@ func Configure(ctx context.Context, chain config.Chain) error {
 		// Manually set the code the Promise contract
 		promiseAlloc, ok := l2Genesis.Alloc[strings.ToLower(bindings.PromiseAddr.Hex()[2:])]
 		if !ok {
-			return fmt.Errorf("promise alloc not found %s:", bindings.PromiseAddr)
+			return fmt.Errorf("promise alloc not found %s", bindings.PromiseAddr)
 		}
 		if err := applyAllocToAddress(ctx, chain, &promiseAlloc, bindings.PromiseAddr); err != nil {
 			return fmt.Errorf("failed to apply alloc for %s: %w", bindings.PromiseAddr, err)
@@ -85,7 +84,7 @@ func Configure(ctx context.Context, chain config.Chain) error {
 		for _, addr := range uniswapV4Addrs {
 			uniswapV4Alloc, ok := l2Genesis.Alloc[strings.ToLower(addr.Hex()[2:])]
 			if !ok {
-				return fmt.Errorf("uniswapV4 alloc not found %s:", addr)
+				return fmt.Errorf("uniswapV4 alloc not found %s", addr)
 			}
 			if err := applyAllocToAddress(ctx, chain, &uniswapV4Alloc, addr); err != nil {
 				return fmt.Errorf("failed to apply alloc for %s: %w", addr, err)
@@ -125,7 +124,7 @@ func predeployToCodeNamespace(addr common.Address) common.Address {
 func applyAllocForPredeploy(ctx context.Context, chain config.Chain, predeploy predeploy, genesisJSON *genesis.GenesisJson) error {
 	implAlloc, ok := genesisJSON.Alloc[strings.ToLower(predeploy.impl.Hex()[2:])]
 	if !ok {
-		return fmt.Errorf("alloc not found %s:", predeploy.impl)
+		return fmt.Errorf("alloc not found %s", predeploy.impl)
 	}
 	if err := applyAllocToAddress(ctx, chain, &implAlloc, predeploy.impl); err != nil {
 		return fmt.Errorf("failed to apply alloc for %s: %w", predeploy.impl, err)
@@ -133,7 +132,7 @@ func applyAllocForPredeploy(ctx context.Context, chain config.Chain, predeploy p
 
 	proxyAlloc, ok := genesisJSON.Alloc[strings.ToLower(predeploy.proxy.Hex()[2:])]
 	if !ok {
-		return fmt.Errorf("alloc not found %s:", predeploy.proxy)
+		return fmt.Errorf("alloc not found %s", predeploy.proxy)
 	}
 	if err := applyAllocToAddress(ctx, chain, &proxyAlloc, predeploy.proxy); err != nil {
 		return fmt.Errorf("failed to apply alloc for %s: %w", predeploy.proxy, err)

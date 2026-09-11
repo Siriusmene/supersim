@@ -3,7 +3,19 @@
 
 This guide describes how to use [`viem`](https://viem.sh/) to send and relay interop messages using the `L2ToL2CrossDomainMessenger`
 
-We'll perform the SuperchainERC20 interop transfer in [First steps](../../getting-started/first-steps.md#send-an-interoperable-superchainerc20-token-from-chain-901-to-902-l2-to-l2-message-passing) and [Manually relaying interop messages with `cast`](./manually-relaying-interop-messages-cast.md) again, this time using `viem` to relay the message without the autorelayer.
+We'll perform a SuperchainERC20 interop transfer, this time using `viem` to relay the message without the autorelayer. For the same walkthrough with `cast`, see [Relay with Cast](./cast.md).
+
+> **This guide does not work on supersim releases after `0.1.0-alpha.59`.**
+>
+> It moves tokens with the `SuperchainTokenBridge` predeploy at
+> `0x4200000000000000000000000000000000000028`, which was deleted from the OP Stack in
+> [ethereum-optimism/optimism#19999](https://github.com/ethereum-optimism/optimism/pull/19999)
+> and is no longer deployed. Nothing replaced it, so SuperchainERC20 tokens cannot move between
+> chains today.
+>
+> The relaying mechanics below are still correct. To follow them on a current supersim, send a
+> message through `L2ToL2CrossDomainMessenger` at `0x4200000000000000000000000000000000000023`,
+> or transfer ETH with `SuperchainETHBridge` at `0x4200000000000000000000000000000000000024`.
 
 - [Steps](#steps)
   - [1. Start `supersim`](#1-start-supersim)

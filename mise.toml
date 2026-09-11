@@ -1,13 +1,19 @@
 [tools]
 
 # Core dependencies
-go = "1.22.3"
+# Tracks the monorepo's own pin; its go.mod requires >= 1.26.0.
+go = "1.26.5"
 rust = "1.83.0"
 just = "1.37.0"
 
 # Go dependencies
 "ubi:goreleaser/goreleaser" = "2.5.1"
-"ubi:golangci/golangci-lint" = "v1.63.4"
+"ubi:golangci/golangci-lint" = "2.13.1"
+
+# Required by the monorepo's sync-superchain.sh, which build-superchain-bundle
+# runs inside the submodule. Versions match the monorepo's own pins.
+jq = "1.7.1"
+yq = "4.44.5"
 
 # Foundry dependencies
 # Foundry is a special case because it supplies multiple binaries at the same
@@ -17,7 +23,7 @@ cast = "nightly-e5ec47b88208fdc48575359e0a5c44f85570ef63"
 anvil = "nightly-e5ec47b88208fdc48575359e0a5c44f85570ef63"
 
 # Foundry provides multiple binaries so we alias them here
-[alias]
+[tool_alias]
 forge = "ubi:foundry-rs/foundry[exe=forge]"
 cast = "ubi:foundry-rs/foundry[exe=cast]"
 anvil = "ubi:foundry-rs/foundry[exe=anvil]"

@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/ethereum-optimism/optimism/op-chain-ops/devkeys"
-	"github.com/ethereum-optimism/optimism/op-service/predeploys"
+	"github.com/ethereum-optimism/optimism/op-core/predeploys"
 	"github.com/ethereum-optimism/optimism/op-service/tasks"
 	"github.com/ethereum-optimism/supersim/bindings"
 	"github.com/ethereum-optimism/supersim/config"
@@ -85,7 +85,7 @@ func (r *L2ToL2MessageRelayer) Start(indexer *L2ToL2MessageIndexer, clients map[
 
 	// we force the curve to Geth's instance, because Geth does an equality check in the nocgo version:
 	// https://github.com/ethereum/go-ethereum/blob/723b1e36ad6a9e998f06f74cc8b11d51635c6402/crypto/signature_nocgo.go#L82
-	privateKey.PublicKey.Curve = crypto.S256()
+	privateKey.Curve = crypto.S256()
 
 	for destinationChainID, client := range r.clients {
 		r.tasks.Go(func() error {
@@ -235,7 +235,7 @@ func (r *L2ToL2MessageRelayer) tryDispatchCallbacks(sentMessage *L2ToL2MessageSt
 		if err != nil {
 			return fmt.Errorf("failed to derive private key: %w", err)
 		}
-		privateKey.PublicKey.Curve = crypto.S256()
+		privateKey.Curve = crypto.S256()
 
 		identifier, err := getIdentifier(r.tasksCtx, destClient, sentMessage.message.Destination, log)
 		if err != nil {

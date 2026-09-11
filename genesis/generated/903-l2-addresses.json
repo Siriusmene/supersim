@@ -1,18 +1,18 @@
 {
-  "OpChainProxyAdmin": "0xb3b3e30b90e2c400d5b7c1bddcf0a8d2317d2941",
-  "AddressManager": "0x45894ba38c58681e1238161a694a67047db5f601",
-  "L1ERC721BridgeProxy": "0x3feca23ebf904dec9eeb7eabb922a5d834cce2c3",
-  "SystemConfigProxy": "0xc535519f1e5660a2c2fb2b9bb3abac94447f5340",
-  "OptimismMintableERC20FactoryProxy": "0x9dd27d39c77ec114021ede4f6f116f0ce691d887",
-  "L1StandardBridgeProxy": "0x8f8b34c7cd328388812bee0621886bf26978fabb",
-  "L1CrossDomainMessengerProxy": "0x15234096021a7003e05fb2696b17d5858e4d92e1",
-  "OptimismPortalProxy": "0x92fbc4e466db9a005a370b52fd26eb3f8f3efd92",
-  "ETHLockboxProxy": "0xbb2ec49aa37192a4ee4795c6f2f6bef0618a4045",
-  "DisputeGameFactoryProxy": "0xbd6b0d1587614c5825c35a7670c947cf5ac1200f",
-  "AnchorStateRegistryProxy": "0xea5c63d41d12ba38c34be3a0b63456ca136071b0",
+  "OpChainProxyAdmin": "0xb242bb2e4712bbc1944c7fde6723cf21735f1f51",
+  "AddressManager": "0x694c75d8d529d0e1ca28f1cf6e9133d8fc209dc1",
+  "L1ERC721BridgeProxy": "0xa57742f2e3febafcb7df3755cefd2874e6b52f9c",
+  "SystemConfigProxy": "0xaf81ec1412dab36f3d3593c4eeb6696701559fed",
+  "OptimismMintableERC20FactoryProxy": "0x53d6e8c2c3d34c7e7fd6b6d15aaea9a34fcf9331",
+  "L1StandardBridgeProxy": "0xdfd0f1c1c3b4018191d9c94a2fe06ccd7bb8ec92",
+  "L1CrossDomainMessengerProxy": "0x2ed42062a193017d64be1f63c5338be9b91e8c53",
+  "OptimismPortalProxy": "0x07e130af7de076499278f8ad951fe956546e2404",
+  "ETHLockboxProxy": "0xa58747b91bd887ea847d51de255ab3567bdb0766",
+  "DisputeGameFactoryProxy": "0xc3bc328d8cf6de280bf59afaa2ced6bcba920ffd",
+  "AnchorStateRegistryProxy": "0xc93614a99d1bc646c381021ec6099d06524821af",
   "FaultDisputeGame": "0x0000000000000000000000000000000000000000",
-  "PermissionedDisputeGame": "0x7698aa84dd6d8e2f51a97c17e54a17eff4a882bc",
-  "DelayedWETHPermissionedGameProxy": "0x0324a671dbe95599622defb1ea222acef76ba613",
-  "DelayedWETHPermissionlessGameProxy": "0x0000000000000000000000000000000000000000"
+  "PermissionedDisputeGame": "0x5c3eb47cb0174aea522a2a9ae79487139a53d691",
+  "DelayedWETHPermissionedGameProxy": "0x4e8378adaadbada66f7b08198a9c69f1f2c09413",
+  "DelayedWETHPermissionlessGameProxy": "0x4e8378adaadbada66f7b08198a9c69f1f2c09413"
 }
 

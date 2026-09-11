@@ -6,6 +6,7 @@ import (
 
 	"testing"
 
+	optypes "github.com/ethereum-optimism/optimism/op-core/types"
 	"github.com/ethereum-optimism/optimism/op-node/rollup/derive"
 	optestutils "github.com/ethereum-optimism/optimism/op-service/testutils"
 
@@ -21,9 +22,9 @@ import (
 
 var _ config.Chain = &MockChainWithSubscriptions{}
 
-func createMockDepositTxs() []*types.DepositTx {
+func createMockDepositTxs() []*optypes.DepositTx {
 	num := 10
-	out := make([]*types.DepositTx, num)
+	out := make([]*optypes.DepositTx, num)
 	for i := range num {
 		rng := rand.New(rand.NewSource(int64(i)))
 
@@ -40,7 +41,7 @@ func createMockDepositTxs() []*types.DepositTx {
 
 type MockChainWithSubscriptions struct {
 	*testutils.MockChain
-	mockDepositTxs []*types.DepositTx
+	mockDepositTxs []*optypes.DepositTx
 }
 
 func (c *MockChainWithSubscriptions) SubscribeFilterLogs(ctx context.Context, q ethereum.FilterQuery, ch chan<- types.Log) (ethereum.Subscription, error) {
