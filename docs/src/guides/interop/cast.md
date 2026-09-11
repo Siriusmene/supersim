@@ -5,6 +5,18 @@ This guide describes how to form a [message identifier](https://specs.optimism.i
 
 We'll perform the SuperchainERC20 interop transfer in [First steps](../../getting-started/first-steps.md#send-an-interoperable-superchainerc20-token-from-chain-901-to-902-l2-to-l2-message-passing) again, this time manually relaying the message without the autorelayer.
 
+> **This guide does not work on supersim releases after `0.1.0-alpha.59`.**
+>
+> It moves tokens with the `SuperchainTokenBridge` predeploy at
+> `0x4200000000000000000000000000000000000028`, which was deleted from the OP Stack in
+> [ethereum-optimism/optimism#19999](https://github.com/ethereum-optimism/optimism/pull/19999)
+> and is no longer deployed. Nothing replaced it, so SuperchainERC20 tokens cannot move between
+> chains today.
+>
+> The relaying mechanics below are still correct. To follow them on a current supersim, send a
+> message through `L2ToL2CrossDomainMessenger` at `0x4200000000000000000000000000000000000023`,
+> or transfer ETH with `SuperchainETHBridge` at `0x4200000000000000000000000000000000000024`.
+
 - [Overview](#overview)
   - [Contracts used](#contracts-used)
   - [High level steps](#high-level-steps)
